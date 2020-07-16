@@ -13,7 +13,7 @@ const Workers1 = () => {
             setisAPILoaded(true);
         })
       }, []);
-
+ 
       const handleInput = (e,index) => {
            setAmount(Workers[index].spent + parseInt(e.target.value));
       }; 
@@ -21,7 +21,8 @@ const Workers1 = () => {
       const addEntry = (i) => {
             console.log(i);
             setWorkers([...Workers.slice(0,i),{...Workers[i],spent:Amount},...Workers.slice(i+1)]);
-            document.getElementById("newEntry").value = "";
+            document.getElementById(`newEntry${i}`).value = "";
+            // document.getElementById("myForm").reset();
       };
 
     return(
@@ -29,8 +30,6 @@ const Workers1 = () => {
        {
         !isAPILoaded ? (<img src="https://media.giphy.com/media/xTk9ZvMnbIiIew7IpW/giphy.gif" alt="Loading" />) : (
           <div className="container">
-            {console.log(Workers)}
-            {/* {console.log(state)} */}
             {Workers.map(({ name, salary, balance, spent }, index) =>
               <div>
                 <div id="accordion">
@@ -54,13 +53,13 @@ const Workers1 = () => {
                             </ul>
                           </div>
                           <div className="col">
-                            <form>
-                              <div class="form-group">
+                            {/* <form id = "myForm">
+                              <div class="form-group"> */}
                                 <label for="newEntry" className="float-left">New Entry</label>
-                                <input type="value" class="form-control" id="newEntry" onChange={(e) => handleInput(e,index)} placeholder="Amount took"  />
-                                <button type="submit" class="btn btn-primary float-left mt-2" onClick={(e) => {e.preventDefault();addEntry(index)}}>ADD</button>
-                              </div>
-                            </form>
+                                <input type="number" class="form-control" id={`newEntry${index}`} onChange={(e) => handleInput(e,index)} placeholder="Amount took"  />
+                                <button type="button" class="btn btn-primary float-left mt-2" onClick={(e) => {e.preventDefault();addEntry(index)}}>ADD</button>
+                              {/* </div>
+                            </form> */}
                           </div>
                         </div>
                       </div>
