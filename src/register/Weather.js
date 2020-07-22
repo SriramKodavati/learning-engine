@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
+import './Weather.css';
 
 const Weather = () => {
 
@@ -59,6 +60,7 @@ const Weather = () => {
         <>
             {
                 !isAPILoaded ? (<img src="https://media.giphy.com/media/xTk9ZvMnbIiIew7IpW/giphy.gif" alt="loading"/>) : (
+                    <div className = "img2">
                     <div className="container">
                         <br />
                         <b>Weather Report: </b>
@@ -101,6 +103,7 @@ const Weather = () => {
                                 </div>
                             </div>
                         )}
+                    </div>
                     </div>
                 )}
         </>

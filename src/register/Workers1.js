@@ -22,7 +22,6 @@ const Workers1 = () => {
             console.log(i);
             setWorkers([...Workers.slice(0,i),{...Workers[i],spent:Amount},...Workers.slice(i+1)]);
             document.getElementById(`newEntry${i}`).value = "";
-            // document.getElementById("myForm").reset();
       };
 
     return(

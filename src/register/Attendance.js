@@ -1,19 +1,27 @@
-import React, { useReducer, useEffect } from 'react'
+import React, { useReducer, useEffect, useContext } from 'react'
+import { AgriContext } from './AgriContext';
 
 const Attendance = () => {
 
-    const INITIAL_STATE = {
-        Attendance : {},
-        isAPILoaded : false,
-        id : "krishna"
-    }
+    let b = useContext(AgriContext);
+    console.log(b);
+
+       const INITIAL_STATE = {
+          Attendance : {},
+          isAPILoaded : false,
+          id : "krishna"
+     }
+
 
     const reducer = (state,action) => {
         const { type,data } = action;
         switch(type) {
             case 'Fetch_Data': {
+                //console.log(data.Attendance);
                 return{
                     ...state, ...data,
+                    //state: Object.assign(state.Attendance,data.Attendance),
+                    //state.Attendance : data[Attendance], 
                     isAPILoaded: true
                 }
             }
@@ -33,12 +41,17 @@ const Attendance = () => {
     }
 
     const [state,dispatch] = useReducer(reducer,INITIAL_STATE);
-    const { Attendance, isAPILoaded, id } = state;
+
+    const { isAPILoaded, id } = state;
     let a = 0;
 
-    useEffect(() =>{
-         fetch("https://jsonblob.com/api/b1f6d678-bf64-11ea-9e44-2f40f17eaf41").then(response => response.json())
-         .then(json => {dispatch({ type:"Fetch_Data", data: { Attendance: {...json} } }) })
+    // useEffect(() =>{
+    //      fetch("https://jsonblob.com/api/b1f6d678-bf64-11ea-9e44-2f40f17eaf41").then(response => response.json())
+    //      .then(json => {dispatch({ type:"Fetch_Data", data: { Attendance: {...json} } }) })
+    // },[])
+    
+    useEffect(() => {
+      dispatch({ type: 'Fetch_Data', data: { Attendance: b.states.Attendance  } })
     },[])
 
     const update = (e,key) => {
@@ -63,16 +76,19 @@ const Attendance = () => {
        a++;
     }
 
+
     return(
     <>
     {
         !isAPILoaded ? (<img src="https://media.giphy.com/media/xTk9ZvMnbIiIew7IpW/giphy.gif" alt="Loading..!" />):(
         <div className = "container">
+            {console.log("Attendance component loading")}
             <h3>Daily Attendance of Workers</h3>
             <div className = "form-inline m-3">
                 <label className = "mr-3"><b>Select the Date: </b></label>
                 <input type = "date" id = "date"></input>
             </div>
+            {console.log(state)}
             <div className = "row m-2">
                 <div className = "col"><b><span className = "badge badge-secondary">Name</span></b></div>
                 <div className = "col"><b><span className = "badge badge-success">Present</span></b></div>
